@@ -23,6 +23,16 @@ const Feed = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [posts, setPosts] = useState([]);
   
+  const fetchPosts = async ()=>{
+    const response = await fetch('/api/prompt');
+    const data = await response.json()
+    setPosts(data);
+  }
+  useEffect(()=>{    
+    fetchPosts()
+
+  },[])
+  
   const handleSearchChange = (e) =>{
     clearTimeout(searchTimeout);
     setSearchText(e.target.value);
@@ -51,16 +61,7 @@ const Feed = () => {
     )
 
   }
-  useEffect(()=>{
-    const fetchPosts = async ()=>{
-      const response = await fetch('/api/prompt');
-      const data = await response.json()
-      setPosts(data);
-    }
-    
-    fetchPosts()
 
-  },[])
   
   return (
     <section className="feed">
